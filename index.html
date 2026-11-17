@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devan Ng — Software for robots and simulated worlds</title>
+<meta name="description" content="Devan Ng is a Computer Science Engineering student at SUNY Buffalo working on autonomy, perception, simulation and games.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF0F2; --panel:#E1E6EA; --ink:#111C25; --mute:#4B5B68; --line:#C3CCD3; --accent:#2145D1;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0D1419; --panel:#151F27; --ink:#E7EEF2; --mute:#9AAAB6; --line:#27343E; --accent:#8CA8FF}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--body)}
+a{color:inherit;text-decoration-color:var(--accent);text-underline-offset:.2em;text-decoration-thickness:2px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-999px;top:.5rem;background:var(--ink);color:var(--bg);padding:.5rem 1rem;z-index:20}
+.skip:focus{left:.5rem}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-.02em}
+.wrap{max-width:68rem;margin:0 auto;padding:0 1.5rem}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:3.5rem}
+.brand{font:700 1.1rem var(--display);text-decoration:none}
+.nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto;scrollbar-width:none}
+.nav ul a{text-decoration:none;font-size:.95rem;font-weight:500;color:var(--mute);white-space:nowrap}
+.nav ul a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:3rem;align-items:center;padding:4.5rem 0 4rem}
+.hero h1{font-size:clamp(3.5rem,9vw,7rem);font-weight:700}
+.hero .role{font:500 clamp(1.3rem,2.6vw,1.75rem)/1.25 var(--display);margin:1.25rem 0 1rem}
+.hero p{max-width:34rem;color:var(--mute);margin:0 0 1.75rem}
+.btns{display:flex;flex-wrap:wrap;gap:.75rem}
+.btn{display:inline-block;padding:.65rem 1.15rem;border:2px solid var(--ink);font-weight:600;text-decoration:none;font-size:.97rem}
+.btn.fill{background:var(--ink);color:var(--bg)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.fill:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.scan{margin:0}
+.scan canvas{display:block;width:100%;aspect-ratio:4/3;background:var(--panel);border:1px solid var(--line)}
+.scan figcaption{font-size:.85rem;color:var(--mute);margin-top:.5rem}
+
+/* sections */
+section{padding:4rem 0;border-top:1px solid var(--line)}
+.sec{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:2rem}
+.sec>h2{font-size:1.9rem;position:sticky;top:5rem;align-self:start}
+.sec h3{font-size:1.35rem;margin-bottom:.35rem}
+.lead{font-size:1.2rem;max-width:40rem;margin:0 0 1.5rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1.5rem 2rem;margin:2rem 0 0}
+.facts dt{font-weight:600}
+.facts dd{margin:.15rem 0 0;color:var(--mute)}
+ul.plain{margin:.5rem 0 0;padding-left:1.1rem}
+ul.plain li{margin:.3rem 0}
+
+/* projects: featured rows with a screenshot, then a compact list */
+.feat{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:1.5rem;margin:0 0 2.75rem;align-items:start}
+.feat .shot{display:block;border:1px solid var(--line);background:var(--panel)}
+.feat img{display:block;width:100%;height:auto}
+.feat p{margin:.4rem 0;max-width:42rem}
+.stack{color:var(--mute);font-size:.95rem}
+.small{list-style:none;margin:.75rem 0 1.5rem;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.5rem 2rem}
+.small li{border-top:3px solid var(--accent);padding-top:.6rem}
+.small h4{font:700 1.1rem var(--display);margin:0 0 .25rem}
+.small p{margin:0;font-size:.97rem;color:var(--mute)}
+
+/* timelines */
+.tl{list-style:none;margin:0 0 3rem;padding:0}
+.tl>li{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:1.25rem;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+.tl time{font-size:.93rem;color:var(--mute);font-variant-numeric:tabular-nums}
+.tl h3{font-size:1.15rem;margin:0}
+.tl .org{color:var(--mute);margin:.1rem 0 .4rem}
+.tl ul{margin:.4rem 0 0;padding-left:1.1rem}
+.tl li li{margin:.25rem 0;border:0;display:list-item;padding:0}
+.group{font-size:1.1rem;margin:0 0 .25rem;color:var(--accent)}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:2rem}
+.skills h3{font-size:1.05rem;margin-bottom:.4rem}
+.skills p{margin:0;color:var(--mute)}
+
+footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--mute);font-size:.93rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.contact a{font:700 clamp(1.4rem,3.5vw,2.2rem)/1.3 var(--display);word-break:break-all}
+.links{display:flex;flex-wrap:wrap;gap:.5rem 1.75rem;margin-top:1.25rem;font-weight:500}
+
+@media (max-width:52rem){
+  .hero{grid-template-columns:1fr;gap:2rem;padding-top:2.5rem}
+  .sec{grid-template-columns:1fr;gap:1.25rem}
+  .sec>h2{position:static}
+  .tl>li{grid-template-columns:1fr;gap:.25rem}
+  .feat{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Devan Ng</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#teams">Teams</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <h1>Devan Ng</h1>
+      <p class="role">I write software that lets robots see, map and move.</p>
+      <p>Computer Science Engineering student at SUNY Buffalo, class of 2027. I work on autonomous driving simulation, rover software, SLAM and game engines.</p>
+      <div class="btns">
+        <a class="btn fill" href="#projects">See my projects</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <figure class="scan">
+      <canvas id="scan" role="img" aria-label="Animated 2D LiDAR scan of a warehouse floor. A scanner moves through a corridor and its laser hits build a map of the walls and shelving."></canvas>
+      <figcaption>A simulated LiDAR sweep mapping a warehouse, the same kind of data my drone SLAM project works with.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<section id="about"><div class="wrap sec">
+  <h2>About</h2>
+  <div>
+    <p class="lead">I like problems where software meets the physical world: sensors that disagree, simulators that need to match reality, and machines that have to make decisions on their own.</p>
+    <p>I study Computer Science Engineering at SUNY Buffalo. My work runs from research on autonomous vehicle simulation to leading software on a student rover team, with game development and modding on the side.</p>
+    <dl class="facts">
+      <div><dt>School</dt><dd>SUNY Buffalo, Computer Science Engineering, 2027. GPA 3.5</dd></div>
+      <div><dt>Currently</dt><dd>CAVAS research and Software Sublead on the UB Space Bulls rover</dd></div>
+      <div><dt>Coursework</dt><dd>Operating Systems, Distributed Systems, Machine Learning, Robotic Algorithms, 3D Game Development</dd></div>
+    </dl>
+  </div>
+</div></section>
+
+<section id="projects"><div class="wrap sec">
+  <h2>Projects</h2>
+  <div>
+    <article class="feat">
+      <a class="shot" href="https://github.com/dngofficial/openscanner3d"><img src="images/openscanner3d.png" width="480" height="270" alt="The OpenScanner3D phone page guiding a walk around a coffee table, with a 12-by-3 angle checklist and a photo counter." loading="lazy"></a>
+      <div>
+        <h3><a href="https://github.com/dngofficial/openscanner3d">OpenScanner3D</a></h3>
+        <p>A local 3D object scanner that needs no app. Your phone's browser connects to your laptop over Wi-Fi and guides you around an object, 12 sides at 3 heights, taking each photo when you reach a missing angle. The laptop checks photo quality, runs COLMAP and SAM 2 masks, and builds a textured, UV-unwrapped low-poly model ready for a game engine.</p>
+        <p class="stack">Python, FastAPI, COLMAP, SAM 2, Three.js. Nothing leaves your local network.</p>
+      </div>
+    </article>
+    <article class="feat">
+      <a class="shot" href="https://github.com/dngofficial/warehouse_drone_twin"><img src="images/aisle-atlas.png" width="480" height="300" alt="The Aisle Atlas flight dashboard: a 3D warehouse with rack rows, a live SLAM top view, flight status and onboard camera panels." loading="lazy"></a>
+      <div>
+        <h3><a href="https://github.com/dngofficial/warehouse_drone_twin">Aisle Atlas</a></h3>
+        <p>A simulated inventory drone that localizes itself with onboard sensors only. A multi-layer LiDAR feeds scan-to-map SLAM using point-to-plane ICP, fused with gyro, velocity and height readings, and builds a voxel map as it flies. A Godot flight dashboard shows the live map, LiDAR rays and manual pilot controls.</p>
+        <p class="stack">Python, ROS 2 Jazzy, Godot 4, NumPy and SciPy, Docker.</p>
+      </div>
+    </article>
+    <article class="feat">
+      <a class="shot" href="https://github.com/dngofficial/flybrain_deltarune"><img src="images/flybrain-deltarune.png" width="480" height="330" alt="The Fly / Dodge Lab inspector: a live Deltarune frame, a connectome activity view, a retina and reinforcement panel, and a motor readout." loading="lazy"></a>
+      <div>
+        <h3><a href="https://github.com/dngofficial/flybrain_deltarune">Flybrain controller for Deltarune</a></h3>
+        <p>A fruit fly connectome that dodges bullets in a Deltarune boss fight. The Kristal fangame engine sends each rendered frame to Python, which turns it into an occupancy grid, runs activity through 1,024 real neurons and 62,888 connections from the MaleCNS dataset, and returns a movement. Only the motor readout is trained, using PPO on confirmed hits and deaths. A live inspector shows what the controller sees.</p>
+        <p class="stack">Python, PyTorch, Kristal (Lua), MaleCNS connectome.</p>
+      </div>
+    </article>
+
+    <h3 class="group">Smaller projects</h3>
+    <ul class="small">
+      <li>
+        <h4><a href="https://alienshmalien.itch.io/beacon">Beacon</a></h4>
+        <p>A tower defense and farming game set on an alien planet, released on itch.io for Windows. I was one of five collaborators and built core gameplay systems in Unreal Engine 5.</p>
+      </li>
+      <li>
+        <h4><a href="https://github.com/dngofficial/songbot">songbot</a></h4>
+        <p>A Discord bot that looks up song details such as BPM and trivia, and lets people request new songs for reviewers to approve or deny. Data lives in Supabase.</p>
+      </li>
+      <li>
+        <h4><a href="https://github.com/dngofficial/stock_suite">stock_suite</a></h4>
+        <p>An educational tool that trains LSTM and GRU models on past prices to estimate whether a stock or ETF closes higher the next day, then tests the signals with pretend money against buy and hold.</p>
+      </li>
+      <li>
+        <h4><a href="https://github.com/dngofficial/carla-fbx-loader-patch">carla-fbx-loader-patch</a></h4>
+        <p>A C++ patch for CARLA 0.9.16 that loads a custom vehicle FBX at runtime, with no cooking or importing. It uses Assimp to split the model into a body and four wheels, then follows the stock Lincoln's animated wheel bones so the wheels steer, spin and move with the suspension.</p>
+      </li>
+    </ul>
+    <p><a href="https://github.com/dngofficial?tab=repositories">All repositories on GitHub</a></p>
+  </div>
+</div></section>
+
+<section id="experience"><div class="wrap sec">
+  <h2>Experience</h2>
+  <div>
+    <ol class="tl">
+      <li>
+        <time>Jan 2026 to present</time>
+        <div>
+          <h3>Research Assistant</h3>
+          <p class="org">CAVAS Autonomous Vehicle Research, SUNY Buffalo</p>
+          <ul>
+            <li>Research autonomous driving simulation using CARLA in Unreal Engine 4.</li>
+            <li>Integrate sensors for perception and repair PLY point clouds for Gaussian splat import.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <time>Jun to Aug 2026</time>
+        <div>
+          <h3>Coding Instructor and Curriculum Developer</h3>
+          <p class="org">Little Genius Prep, Brooklyn NY</p>
+          <ul>
+            <li>Designed and taught project-based lessons that introduce programming fundamentals.</li>
+            <li>Built an OCR pipeline that digitizes and consolidates scanned and handwritten worksheets.</li>
+            <li>Automated self-grading Google Forms quizzes from answer keys.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <time>Jun to Aug 2025</time>
+        <div>
+          <h3>Desktop Support Intern</h3>
+          <p class="org">SUNY Downstate Medical Center, Brooklyn NY</p>
+          <ul>
+            <li>Managed the inventory of hospital desktop computers and peripherals.</li>
+            <li>Imaged computers with institution-standard operating systems and installed software for hospital departments under IT protocols.</li>
+            <li>Helped resolve help desk tickets and walk-in requests.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <time>Jun to Aug 2024</time>
+        <div>
+          <h3>IT and Networking Intern</h3>
+          <p class="org">Kings County Hospital Center, Brooklyn NY</p>
+          <ul>
+            <li>Repaired medical equipment, network switches and ethernet outlets.</li>
+            <li>Recovered users' logins during the CrowdStrike outage of August 2024.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div></section>
+
+<section id="teams"><div class="wrap sec">
+  <h2>Teams and activities</h2>
+  <div>
+    <ol class="tl">
+      <li>
+        <time>Sep 2025 to present</time>
+        <div>
+          <h3>Software Sublead</h3>
+          <p class="org">UB Space Bulls Rover Team</p>
+          <ul>
+            <li>Coordinate software development for embedded systems.</li>
+            <li>Developed and tested control software for autonomous navigation and obstacle detection.</li>
+            <li>Implemented computer vision algorithms that process terrain data from onboard sensors and cameras.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <time>Sep 2025 to Dec 2025</time>
+        <div>
+          <h3>Gameplay Programmer</h3>
+          <p class="org">Beacon Game Development Team</p>
+          <ul><li>Built core gameplay systems in Unreal Engine 5 and collected peer feedback at campus showcases.</li></ul>
+        </div>
+      </li>
+      <li>
+        <time>Sep 2023 to Sep 2025</time>
+        <div>
+          <h3>Team Member</h3>
+          <p class="org">IEEE Micromouse</p>
+          <ul><li>Designed and tested maze traversal algorithms (DFS, BFS, flood-fill) for an autonomous robotic mouse in a team of six.</li></ul>
+        </div>
+      </li>
+      <li>
+        <time>Feb to May 2024</time>
+        <div>
+          <h3>Flight Software Developer</h3>
+          <p class="org">Short Cycle Nanosatellite Lab, SUNY Buffalo</p>
+          <ul><li>Wrote flight software for a weather balloon nanosatellite and set up the camera, navigation sensors and burn wire payload release.</li></ul>
+        </div>
+      </li>
+      <li>
+        <time>Jun 2022 to present</time>
+        <div>
+          <h3>Video game modder and YouTuber</h3>
+          <p class="org">Personal project</p>
+          <ul><li>Modify existing games, contribute to open source modding tools and work with community artists, musicians and writers on multi-person programming projects.</li></ul>
+        </div>
+      </li>
+    </ol>
+    <h3 class="group">Recognition</h3>
+    <ul class="plain">
+      <li>Best Use of AI Award, UB Hackathon (Nov 2023)</li>
+      <li>Career Design Center Unpaid Internship Award (May 2024)</li>
+      <li>UB Spark Leadership Certification (Dec 2023)</li>
+      <li>Pride of New York Scholarship (Aug 2023 to May 2025)</li>
+    </ul>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap sec">
+  <h2>Skills</h2>
+  <div class="skills">
+    <div><h3>Languages</h3><p>Python, Java SE 17 and Lua (advanced). C (intermediate). VHDL (beginner). Also JavaScript (Node.js) and PyTorch in projects.</p></div>
+    <div><h3>Robotics and simulation</h3><p>ROS 2 (intermediate), CARLA, SLAM and sensor fusion, computer vision, point clouds.</p></div>
+    <div><h3>Game engines</h3><p>Unreal Engine 4 and 5 (intermediate), Godot (intermediate).</p></div>
+    <div><h3>Tools</h3><p>Git and GitHub, Linux, Docker, Google Workspace, Microsoft Office.</p></div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="wrap sec">
+  <h2>Contact</h2>
+  <div class="contact">
+    <p class="lead">I'm looking for robotics, autonomy and simulation roles. The fastest way to reach me is email.</p>
+    <a href="mailto:devan.amar.ng@gmail.com">devan.amar.ng@gmail.com</a>
+    <div class="links">
+      <a href="https://github.com/dngofficial">GitHub</a>
+      <a href="https://www.linkedin.com/in/devan-ng-881218245/">LinkedIn</a>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><span>Devan Ng, 2026</span><a href="#top">Back to top</a></div></footer>
+
+<script>
+(function(){
+  var c=document.getElementById('scan'),g=c.getContext('2d'),S=[],hits=[];
+  function box(a,b,w,h){S.push([a,b,a+w,b],[a+w,b,a+w,b+h],[a+w,b+h,a,b+h],[a,b+h,a,b]);}
+  box(.1,.1,3.8,2.8);                      // walls
+  [.8,1.5,2.2,2.9].forEach(function(x){box(x,1.1,.3,1.6);}); // shelving rows
+  box(3.45,.45,.25,.25);                   // pillar
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var px=1.85,py=.6,ang=0,k=1,dpr=1,col='#2145D1',life=5000;
+
+  function cast(a){
+    var dx=Math.cos(a),dy=Math.sin(a),best=1e9;
+    for(var i=0;i<S.length;i++){
+      var s=S[i],ex=s[2]-s[0],ey=s[3]-s[1],den=dx*ey-dy*ex;
+      if(Math.abs(den)<1e-9)continue;
+      var qx=s[0]-px,qy=s[1]-py,t=(qx*ey-qy*ex)/den,u=(qx*dy-qy*dx)/den;
+      if(t>0&&u>=0&&u<=1&&t<best)best=t;
+    }
+    return best<1e9?{x:px+dx*best,y:py+dy*best}:null;
+  }
+  function size(){
+    dpr=window.devicePixelRatio||1;
+    c.width=c.clientWidth*dpr;c.height=c.clientHeight*dpr;k=c.width/4;
+    col=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||col;
+  }
+  function draw(now){
+    g.clearRect(0,0,c.width,c.height);
+    g.fillStyle=col;
+    var r=Math.max(1.6*dpr,k*.012);
+    for(var i=hits.length-1;i>=0;i--){
+      var h=hits[i],age=reduce?0:now-h.t;
+      if(age>life){hits.splice(0,i+1);break;}
+      g.globalAlpha=1-age/life;
+      g.fillRect(h.x*k-r/2,h.y*k-r/2,r,r);
+    }
+    g.globalAlpha=1;
+    if(!reduce){
+      g.strokeStyle=col;g.globalAlpha=.35;g.lineWidth=dpr;
+      g.beginPath();g.moveTo(px*k,py*k);g.lineTo(px*k+Math.cos(ang)*k*.6,py*k+Math.sin(ang)*k*.6);g.stroke();
+      g.globalAlpha=1;
+    }
+    g.beginPath();g.arc(px*k,py*k,5*dpr,0,7);g.fill();
+  }
+  function frame(now){
+    var t=now/1000;
+    px=2+1.45*Math.sin(t*.22);py=.62+.22*Math.sin(t*.5);
+    for(var i=0;i<3;i++){
+      ang+=.04;var p=cast(ang);
+      if(p){p.t=now;hits.push(p);}
+    }
+    draw(now);requestAnimationFrame(frame);
+  }
+  function still(){
+    hits=[];for(var a=0;a<6.2832;a+=.009){var p=cast(a);if(p)hits.push(p);}
+    draw(0);
+  }
+  size();
+  addEventListener('resize',function(){size();if(reduce)still();});
+  if(reduce)still();else requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
