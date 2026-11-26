@@ -160,7 +160,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
       <a class="shot" href="https://github.com/dngofficial/openscanner3d"><img src="images/openscanner3d.png" width="480" height="270" alt="The OpenScanner3D phone page guiding a walk around a coffee table, with a 12-by-3 angle checklist and a photo counter." loading="lazy"></a>
       <div>
         <h3><a href="https://github.com/dngofficial/openscanner3d">OpenScanner3D</a></h3>
-        <p>A local 3D object scanner that needs no app. Your phone's browser connects to your laptop over Wi-Fi and guides you around an object, 12 sides at 3 heights, taking each photo when you reach a missing angle. The laptop checks photo quality, runs COLMAP and SAM 2 masks, and builds a textured, UV-unwrapped low-poly model ready for a game engine.</p>
+        <p>Built a browser-based 3D scanner with 36 guided views, COLMAP reconstruction, and SAM 2 masking. A phone captures photos over local Wi-Fi and the laptop generates a textured mesh. The capture workflow checks photo quality and produces a UV-unwrapped, low-poly model.</p>
         <p class="stack">Python, FastAPI, COLMAP, SAM 2, Three.js. Nothing leaves your local network.</p>
       </div>
     </article>
@@ -168,7 +168,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
       <a class="shot" href="https://github.com/dngofficial/warehouse_drone_twin"><img src="images/aisle-atlas.png" width="480" height="300" alt="The Aisle Atlas flight dashboard: a 3D warehouse with rack rows, a live SLAM top view, flight status and onboard camera panels." loading="lazy"></a>
       <div>
         <h3><a href="https://github.com/dngofficial/warehouse_drone_twin">Aisle Atlas</a></h3>
-        <p>A simulated inventory drone that localizes itself with onboard sensors only. A multi-layer LiDAR feeds scan-to-map SLAM using point-to-plane ICP, fused with gyro, velocity and height readings, and builds a voxel map as it flies. A Godot flight dashboard shows the live map, LiDAR rays and manual pilot controls.</p>
+        <p>Built a Godot warehouse drone simulator with onboard LiDAR SLAM, point-to-plane ICP, sensor fusion, and voxel mapping. The flight dashboard shows the live map, LiDAR rays, and pilot controls. The simulated drone localizes using only onboard sensors, fusing LiDAR with gyro, velocity, and height readings.</p>
         <p class="stack">Python, ROS 2 Jazzy, Godot 4, NumPy and SciPy, Docker.</p>
       </div>
     </article>
@@ -176,7 +176,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
       <a class="shot" href="https://github.com/dngofficial/pickup_drone_twin"><img src="images/dashboard.png" width="960" height="600" alt="The URC Pickup Drone Twin dashboard over desert terrain: flight telemetry, a site map with SLAM and coverage, an onboard camera view and mission controls." loading="lazy"></a>
       <div>
         <h3><a href="https://github.com/dngofficial/pickup_drone_twin">URC Pickup Drone Twin</a></h3>
-        <p>A ROS 2 autonomy stack for a simulated drone that searches seeded terrain, sorts bottles into one bin and hammers into another, then returns to its station. It navigates with LiDAR SLAM, station-tag fixes and A* routing. A Godot dashboard or a Gazebo Harmonic backend can drive the same stack. Detection runs from a simulated oracle or a trained YOLOv8 model through ONNX. This is simulation only, and nothing has been validated on flight hardware.</p>
+        <p>Developed a ROS 2 drone simulation that uses LiDAR SLAM, station-tag fixes, and A* routing to find and sort bottles and hammers. Godot and Gazebo Harmonic provide simulation backends. The stack supports an oracle or YOLOv8 ONNX detector and returns the simulated drone to its station.</p>
         <p class="stack">Python, ROS 2 Jazzy, Godot 4, Gazebo Harmonic, YOLOv8 and ONNX, Docker.</p>
       </div>
     </article>
@@ -184,7 +184,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
       <a class="shot" href="https://github.com/dngofficial/flybrain_deltarune"><img src="images/flybrain-deltarune.png" width="480" height="330" alt="The Fly / Dodge Lab inspector: a live Deltarune frame, a connectome activity view, a retina and reinforcement panel, and a motor readout." loading="lazy"></a>
       <div>
         <h3><a href="https://github.com/dngofficial/flybrain_deltarune">Flybrain controller for Deltarune</a></h3>
-        <p>A fruit fly connectome that dodges bullets in a Deltarune boss fight. The Kristal fangame engine sends each rendered frame to Python, which turns it into an occupancy grid, runs activity through 1,024 real neurons and 62,888 connections from the MaleCNS dataset, and returns a movement. Only the motor readout is trained, using PPO on confirmed hits and deaths. A live inspector shows what the controller sees.</p>
+        <p>Built a Kristal-to-Python bullet-dodging controller using a 1,024-neuron fruit fly connectome. Trained the motor readout with PPO and built a live inspector to visualize the controller’s inputs. The connectome uses 62,888 connections from the MaleCNS dataset.</p>
         <p class="stack">Python, PyTorch, Kristal (Lua), MaleCNS connectome.</p>
       </div>
     </article>
@@ -222,8 +222,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
           <h3>Research Assistant</h3>
           <p class="org">CAVAS Autonomous Vehicle Research, SUNY Buffalo</p>
           <ul>
-            <li>Research autonomous driving simulation using CARLA in Unreal Engine 4.</li>
-            <li>Integrate sensors for perception and repair PLY point clouds for Gaussian splat import.</li>
+            <li>Built an Assimp FBX loader for CARLA 0.9.16 and verified runtime import of a custom Lincoln mesh.</li>
+            <li>Integrated LiDAR, camera, and IMU streams in CARLA and repaired PLY point clouds for Gaussian splatting.</li>
+            <li>Prototyped Lincoln point-cloud alignment between Autoware and Unity using ROS 2 and Open3D ICP.</li>
           </ul>
         </div>
       </li>
@@ -276,9 +277,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
           <h3>Software Sublead</h3>
           <p class="org">UB Space Bulls Rover Team</p>
           <ul>
-            <li>Coordinate software development for embedded systems.</li>
-            <li>Developed and tested control software for autonomous navigation and obstacle detection.</li>
-            <li>Implemented computer vision algorithms that process terrain data from onboard sensors and cameras.</li>
+            <li>Led embedded software development and tested rover navigation and obstacle detection.</li>
+            <li>Built a ROS 2 Jazzy node that maps terrain height, slope, and roughness and separates ground from obstacles.</li>
+            <li>Validated terrain mapping with simulated Unitree L1 LiDAR in Gazebo and verified ZED 2 streams in RViz2.</li>
+            <li>Built a YOLO11/OpenCV gesture detector for the University Rover Challenge with person tracking and ROS 2 command intents.</li>
           </ul>
         </div>
       </li>
@@ -328,10 +330,10 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 <section id="skills"><div class="wrap sec">
   <h2>Skills</h2>
   <div class="skills">
-    <div><h3>Languages</h3><p>Python, Java SE 17 and Lua (advanced). C (intermediate). VHDL (beginner). Also JavaScript (Node.js) and PyTorch in projects.</p></div>
-    <div><h3>Robotics and simulation</h3><p>ROS 2 (intermediate), CARLA, Gazebo, SLAM and sensor fusion, computer vision, point clouds.</p></div>
-    <div><h3>Game engines</h3><p>Unreal Engine 4 and 5 (intermediate), Godot (intermediate).</p></div>
-    <div><h3>Tools</h3><p>Git and GitHub, Linux, Docker, Google Workspace, Microsoft Office.</p></div>
+    <div><h3>Languages</h3><p>Python, C, C++, Java, Lua, SQL, VHDL, and JavaScript.</p></div>
+    <div><h3>Robotics and simulation</h3><p>ROS 2, Autoware, CARLA, Gazebo, RViz2, Open3D, OpenCV, YOLO, SLAM, sensor fusion, and point clouds.</p></div>
+    <div><h3>Game engines</h3><p>Unreal Engine, Unity, and Godot.</p></div>
+    <div><h3>Tools</h3><p>Git and GitHub, Linux, Docker, PyTorch, Google Workspace, and Microsoft Office.</p></div>
   </div>
 </div></section>
 
